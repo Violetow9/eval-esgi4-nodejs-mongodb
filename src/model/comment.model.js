@@ -20,6 +20,10 @@ const comment = new Schema({
         type: Date,
         default: Date.now
     },
+    updated_at: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const Comment = mongoose.model('Comment', comment);
