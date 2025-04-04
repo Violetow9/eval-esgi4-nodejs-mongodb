@@ -1,10 +1,10 @@
 meta {
-  name: create
+  name: update
   type: http
-  seq: 1
+  seq: 3
 }
 
-post {
+put {
   url: http://localhost:3000/posts/
   body: multipartForm
   auth: none
@@ -18,9 +18,4 @@ body:json {
   {
     "text": "test"
   }
-}
-
-body:multipart-form {
-  text: test de text
-  image: @file(/Users/h.ilarraz/Downloads/1200x680_jean-paul_rouve_julien_warnand_maxppp.jpg)
 }

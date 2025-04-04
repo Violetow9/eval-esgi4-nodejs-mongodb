@@ -1,26 +1,15 @@
 meta {
-  name: create
+  name: delete
   type: http
-  seq: 1
+  seq: 4
 }
 
-post {
-  url: http://localhost:3000/posts/
-  body: multipartForm
+delete {
+  url: http://localhost:3000/posts/67eff244182f60f1ec630693
+  body: none
   auth: none
 }
 
 headers {
   Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwicHNldWRvIjoicHN1ZW9kIiwiX2lkIjoiNjdlZmVmMzgyZGFjNzhhNjI2N2MwM2YxIiwiaWF0IjoxNzQzNzc3Njg1LCJleHAiOjE3NDM3ODEyODV9.oCuFglbKIHdftowLRUBdqAsirHlz-lYd283PxOz2PEY
-}
-
-body:json {
-  {
-    "text": "test"
-  }
-}
-
-body:multipart-form {
-  text: test de text
-  image: @file(/Users/h.ilarraz/Downloads/1200x680_jean-paul_rouve_julien_warnand_maxppp.jpg)
 }
