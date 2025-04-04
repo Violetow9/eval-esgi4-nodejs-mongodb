@@ -41,6 +41,10 @@ exports.update = async (req, res) => {
         return res.status(404).json({ error: "Commentaire non trouvé" });
     }
 
+    if (comment.user_id.toString() !== req.token._id.toString()) {
+        return res.status(403).json({ error: "Vous ne pouvez pas modifier ce commentaire" });
+    }
+
     const newText = req.body.text;
     if (newText) {
         comment.text = newText;
