@@ -5,6 +5,9 @@ const Post = require("../model/post.model.js");
 
 exports.create = async (req, res) => {
     const userId = req.token._id;
+    if (!userId) {
+        return res.status(400).json({error: "Vous devez spécifier un id d'utilisateur"});
+    }
 
     let post = {
         "user_id": userId,
