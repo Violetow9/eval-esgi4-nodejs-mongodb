@@ -1,18 +1,18 @@
 const Comment = require("./../model/comment.model.js");
 
 exports.create = async (req, res) => {
-    if (!req.body.text || req.body.text === "") {
-        return res.status(400).json({message: "Veuillez saisir un commentaire"})
+    if (!req.body.postId || req.body.postId === "") {
+        return res.status(400).json({message: "Veuillez spécifier un post"})
     }
 
-    if (!req.params.postId) {
-        return res.status(400).json({message: "Veuillez spécifier un post"})
+    if (!req.body.text || req.body.text === "") {
+        return res.status(400).json({message: "Veuillez saisir un commentaire"})
     }
 
     const comment = {
         "text": req.body.text,
         "user_id": req.token._id,
-        "post_id": req.params.postId,
+        "post_id": req.body.postId,
         "created_at": Date.now(),
         "updated_at": Date.now()
     };
@@ -29,14 +29,12 @@ exports.create = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const commentId = req.params.id;
-
+    const commentId = req.params.commentId;
     if (!commentId) {
         return res.status(400).json({error: "Vous devez spécifier un id de commentaire"});
     }
 
     const comment = await Comment.findOne({_id: commentId});
-
     if (!comment) {
         return res.status(404).json({error: "Commentaire non trouvé"});
     }
