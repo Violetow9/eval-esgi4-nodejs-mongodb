@@ -24,6 +24,6 @@ app.use((req, res, next) => {
 
 app.use('/auth', authRoute);
 app.use('/posts', postRoute);
-app.use('/posts/comment', commentRoute);
+app.use('/comments', commentRoute);
 
 module.exports = app;
