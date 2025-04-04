@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("./../model/user.model.js");
-const bcrypt = require("bcrypt");
-require("dotenv").config();
+const bcrypt = require("bcryptjs");
 
 exports.signin = async (req, res) => {
     if (!req.body.email || req.body.email === "" || !req.body.password || req.body.password === "") {
