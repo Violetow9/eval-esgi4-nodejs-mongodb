@@ -64,13 +64,11 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     const commentId = req.params.commentId;
-
     if (!commentId) {
         return res.status(400).json({error: "Vous devez spécifier un id de commentaire"});
     }
 
     const comment = await Comment.findOne({_id: commentId});
-
     if (!comment) {
         return res.status(404).json({error: "Commentaire non trouvé"});
     }
