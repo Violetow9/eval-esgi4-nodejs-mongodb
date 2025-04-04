@@ -15,6 +15,14 @@ const post = new Schema({
         ref: 'User',
         required: true
     },
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const Post = mongoose.model('Post', post);
