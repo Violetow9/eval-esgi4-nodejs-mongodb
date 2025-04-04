@@ -10,4 +10,4 @@ FROM node:22-slim
 WORKDIR /app
 COPY --from=build /app ./
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["node", "app.js"]
