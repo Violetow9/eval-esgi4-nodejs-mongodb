@@ -29,7 +29,7 @@ exports.create = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const commentId = req.params.commentId;
+    const commentId = req.params.id;
 
     if (!commentId) {
         return res.status(400).json({error: "Vous devez spécifier un id de commentaire"});
@@ -63,7 +63,7 @@ exports.update = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
-    const commentId = req.params.commentId;
+    const commentId = req.params.id;
     if (!commentId) {
         return res.status(400).json({error: "Vous devez spécifier un id de commentaire"});
     }
@@ -86,45 +86,4 @@ exports.delete = async (req, res) => {
     } catch (e) {
         return res.status(500).json({error: "Erreur lors de la suppression du commentaire"});
     }
-}
-
-
-exports.getByPostId = async (req, res) => {
-    let comments = await Comment.find({post_id: req.params.postId}).populate("user_id", "email").sort({created_at: -1});
-
-    if (!comments) {
-        return res.status(404).json({error: "Commentaires non trouvés"});
-    }
-
-    return res.status(200).json(comments);
-}
-
-exports.getById = async (req, res) => {
-    let comment = await Comment.findOne({_id: req.params.commentId}).populate("user_id", "email");
-
-    if (!comment) {
-        return res.status(404).json({error: "Commentaire non trouvé"});
-    }
-
-    return res.status(200).json(comment);
-}
-
-exports.getByUserId = async (req, res) => {
-    let comments = await Comment.find({user_id: req.params.userId}).populate("user_id", "email").sort({created_at: -1});
-
-    if (!comments) {
-        return res.status(404).json({error: "Commentaires non trouvés"});
-    }
-
-    return res.status(200).json(comments);
-}
-
-exports.getAll = async (_req, res) => {
-    let comments = await Comment.find().populate("user_id", "email").sort({created_at: -1});
-
-    if (!comments) {
-        return res.status(404).json({error: "Commentaires non trouvés"});
-    }
-
-    return res.status(200).json(comments);
 }
