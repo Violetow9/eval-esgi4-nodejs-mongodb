@@ -1,8 +1,8 @@
-version: '3.9'
-
 services:
   mongodb:
     image: mongo:latest
+    env_file:
+      - .env
     container_name: mongodb
     restart: unless-stopped
     ports:
@@ -14,6 +14,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    env_file:
+      - .env
     container_name: node-app
     restart: unless-stopped
     environment:
