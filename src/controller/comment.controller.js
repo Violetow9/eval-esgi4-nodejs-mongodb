@@ -19,7 +19,10 @@ exports.create = async (req, res) => {
 
     try {
         await Comment.create(comment);
-        return res.status(201).json(comment);
+        return res.status(201).json({
+            message: "Commentaire créé",
+            comment
+        });
     } catch (e) {
         return res.status(500).json({ error: "Erreur lors de la création du commentaire" });
     }
@@ -38,6 +41,10 @@ exports.update = async (req, res) => {
         return res.status(404).json({ error: "Commentaire non trouvé" });
     }
 
+    if (comment.user_id.toString() !== req.token._id.toString()) {
+        return res.status(403).json({ error: "Vous ne pouvez pas modifier ce commentaire" });
+    }
+
     const newText = req.body.text;
     if (newText) {
         comment.text = newText;
@@ -48,7 +55,7 @@ exports.update = async (req, res) => {
         await comment.save();
         return res.status(201).json({
             message: "Commentaire mis à jour",
-            comment: comment
+            comment
         });
     } catch (e) {
         return res.status(500).json({ error: "Erreur lors de la mise à jour du commentaire" });
@@ -77,7 +84,7 @@ exports.delete = async (req, res) => {
     if (result !== 1) {
         return res.status(404).json({error: "Une erreur est survenue lors de la suppression du commentaire"});
     }
-    
+
     return res.status(200).json({message: "Commentaire supprimé"});
 }
 
@@ -112,7 +119,7 @@ exports.getByUserId = async (req, res) => {
     return res.status(200).json(comments);
 }
 
-exports.getAll = async (req, res) => {
+exports.getAll = async (_req, res) => {
     let comments = await Comment.find().populate("user_id", "email").sort({ created_at: -1 });
 
     if (!comments) {
