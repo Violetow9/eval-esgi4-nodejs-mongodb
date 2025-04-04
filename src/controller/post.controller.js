@@ -25,14 +25,24 @@ exports.create = async (req, res) => {
 
     try {
         await Post.create(post);
-        return res.status(201).json(post);
+        return res.status(201).json({
+            message: 'Post créé',
+            post
+        });
     } catch (error) {
         return res.status(500).json({error: "Erreur lors de la création du post"});
     }
 }
 
 exports.getAll = async (req, res) => {
-    const postList = await Post.find({}, {}, {sort: {created_at: -1}});
+    const postList = await Post.find({}, {
+        _id: 0,
+        text: 1,
+        image: 1,
+        user_id: 1,
+        created_at: 1,
+        updated_at: 1
+    }, {sort: {created_at: -1}});
     if (!postList) {
         return res.status(404).json({error: "Aucun post trouvé"});
     }
@@ -62,10 +72,7 @@ exports.update = async (req, res) => {
         await post.save();
         return res.status(201).json({
             message: "Post mis à jour",
-            post: {
-                text: newText,
-                image: newImage
-            }
+            post
         });
     } catch (e) {
         return res.status(500).json({error: "Problème lors de la modification du post !"})
