@@ -5,7 +5,6 @@ exports.create = async (req, res) => {
         return res.status(400).json({message: "Veuillez saisir un commentaire"})
     }
 
-
     if (!req.params.postId) {
         return res.status(400).json({message: "Veuillez spécifier un post"})
     }
