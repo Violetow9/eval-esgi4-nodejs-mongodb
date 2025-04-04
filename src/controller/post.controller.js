@@ -34,7 +34,7 @@ exports.create = async (req, res) => {
     }
 }
 
-exports.getAll = async (req, res) => {
+exports.getAll = async (_req, res) => {
     const postList = await Post.find({}, {
         _id: 0,
         text: 1,
