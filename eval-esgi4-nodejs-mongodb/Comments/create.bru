@@ -1,0 +1,27 @@
+meta {
+  name: create
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/comments/
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwicHNldWRvIjoicHN1ZW9kIiwiX2lkIjoiNjdlZmVmMzgyZGFjNzhhNjI2N2MwM2YxIiwiaWF0IjoxNzQzNzc3Njg1LCJleHAiOjE3NDM3ODEyODV9.oCuFglbKIHdftowLRUBdqAsirHlz-lYd283PxOz2PEY
+}
+
+body:json {
+  {
+    "postId": "67efef382dac78a6267c03f1",
+    "text": "test"
+  }
+}
+
+body:multipart-form {
+  text: test de text
+  image: @file(/Users/h.ilarraz/Downloads/1200x680_jean-paul_rouve_julien_warnand_maxppp.jpg)
+}
