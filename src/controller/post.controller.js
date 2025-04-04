@@ -56,6 +56,10 @@ exports.update = async (req, res) => {
         return res.status(404).json({error: "Le post n'existe pas"});
     }
 
+    if (post.user_id.toString() !== req.token._id.toString()) {
+        return res.status(403).json({ error: "Vous ne pouvez pas modifier ce post" });
+    }
+
     const newText = req.body.text;
     if (newText) {
         post.text = newText;
@@ -83,6 +87,10 @@ exports.delete = async (req, res) => {
     const postId = req.params.id;
     if (!postId) {
         return res.status(400).json({error: "Vous devez spécifier un id de post"});
+    }
+
+    if (post.user_id.toString() !== req.token._id.toString()) {
+        return res.status(403).json({ error: "Vous ne pouvez pas supprimer ce post" });
     }
 
     const result = await Post.deleteOne({_id: postId});
