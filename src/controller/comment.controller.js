@@ -119,7 +119,7 @@ exports.getByUserId = async (req, res) => {
     return res.status(200).json(comments);
 }
 
-exports.getAll = async (req, res) => {
+exports.getAll = async (_req, res) => {
     let comments = await Comment.find().populate("user_id", "email").sort({ created_at: -1 });
 
     if (!comments) {
