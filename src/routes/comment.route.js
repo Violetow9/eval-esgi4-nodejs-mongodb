@@ -7,9 +7,9 @@ router.get('/post/:id',commentController.getByPostId);
 router.get('/user/:id',commentController.getByUserId);
 
 router.get('/',commentController.getAll);
-router.delete('/:id',commentController.delete);
+router.delete('/:id', authMiddleware, commentController.delete);
 
-router.post('/', commentController.create);
-router.put('/:id', commentController.update);
+router.post('/', authMiddleware, commentController.create);
+router.put('/:id', authMiddleware, commentController.update);
 
 module.exports = router;

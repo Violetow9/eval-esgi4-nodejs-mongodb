@@ -79,13 +79,15 @@ exports.delete = async (req, res) => {
         return res.status(403).json({ error: "Vous ne pouvez pas supprimer ce commentaire" });
     }
 
-    const result = await Comment.deleteOne({_id: commentId});
-
-    if (result !== 1) {
-        return res.status(404).json({error: "Une erreur est survenue lors de la suppression du commentaire"});
+    try {
+        await comment.deleteOne({ _id: commentId });
+        return res.status(200).json({
+            message: "Commentaire supprimé",
+            comment
+        });
+    } catch (e) {
+        return res.status(500).json({ error: "Erreur lors de la suppression du commentaire" });
     }
-
-    return res.status(200).json({message: "Commentaire supprimé"});
 }
 
 
