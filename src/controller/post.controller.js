@@ -15,6 +15,9 @@ exports.create = async (req, res) => {
         "updated_at": Date.now()
     };
 
+    console.log(req);
+    console.log(req.body);
+
     const text = req.body.text;
     if (!text || text === "") {
         return res.status(400).json({error: "Vous devez spécifier un texte"});
@@ -39,7 +42,7 @@ exports.create = async (req, res) => {
 
 exports.getAll = async (_req, res) => {
     const postList = await Post.find({}, {
-        _id: 0,
+        _id: 1,
         text: 1,
         image: 1,
         user_id: 1,
@@ -60,7 +63,7 @@ exports.update = async (req, res) => {
     }
 
     if (post.user_id.toString() !== req.token._id.toString()) {
-        return res.status(403).json({ error: "Vous ne pouvez pas modifier ce post" });
+        return res.status(403).json({error: "Vous ne pouvez pas modifier ce post"});
     }
 
     const newText = req.body.text;
@@ -92,13 +95,21 @@ exports.delete = async (req, res) => {
         return res.status(400).json({error: "Vous devez spécifier un id de post"});
     }
 
-    if (post.user_id.toString() !== req.token._id.toString()) {
-        return res.status(403).json({ error: "Vous ne pouvez pas supprimer ce post" });
+    let post;
+    try {
+        post = await Post.findOne({_id: postId});
+    } catch (error) {
+        return res.status(500).json({error: "Post introuvable"});
     }
 
-    const result = await Post.deleteOne({_id: postId});
-    if (result !== 1) {
+    if (post.user_id.toString() !== req.token._id.toString()) {
+        return res.status(403).json({error: "Vous ne pouvez pas supprimer ce post"});
+    }
+
+    try {
+        await Post.deleteOne({_id: postId});
+        return res.status(200).json({message: "Post supprimé"});
+    } catch (error) {
         return res.status(404).json({error: "Une erreur est survenue lors de la suppression du post"});
     }
-    return res.status(200).json({message: "Post supprimé"});
 }
